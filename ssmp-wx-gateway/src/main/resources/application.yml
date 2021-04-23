@@ -1,0 +1,25 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: ssmp-wx-gateway
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 127.0.0.1:8848
+        namespace: 9c33092e-e975-4e14-a8b7-d874b4a11b17
+        group: ssmp-wx
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ssmp-wx_routh
+          uri: lb://ssmp-wx-api
+          predicates:
+            - Path=/**
+
+
+

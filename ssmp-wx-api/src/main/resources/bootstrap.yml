@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        group: ssmp-wx
+        file-extension: yaml
+        namespace: 9c33092e-e975-4e14-a8b7-d874b4a11b17

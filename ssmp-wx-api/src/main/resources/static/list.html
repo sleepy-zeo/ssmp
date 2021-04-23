@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="themess/css/base.css" rel="stylesheet" type="text/css">
+    <link href="themess/css/home.css" rel="stylesheet" type="text/css">
+    <link href="themess/css/icon.css" rel="stylesheet" type="text/css">
+
+    <link href="iTunesArtwork@2x.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+</head>
+<body>
+
+<section class="aui-flexView">
+    <header class="aui-navBar">
+        <a class="aui-navBar-item" href="javascript:history.go(-1);">
+            <i class="aui-icon aui-back-icon"></i>
+        </a>
+        <div class="aui-navBar-center">
+            <span class="aui-navBar-title">商品列表</span>
+        </div>
+    </header>
+    <nav class="aui-flexNav">
+        <ul class="aui-search-tab bor-bom">
+            <li class="aui-change-eleven active">
+                <span>综合</span>
+            </li>
+            <li class="aui-change-eleven">
+                <span>销量</span>
+            </li>
+            <li class="aui-change-eleven aui-new-sort-price">
+                <span>价格</span>
+            </li>
+            <li class="aui-change-eleven">
+                <span>筛选<span class="choose-icon"></span></span>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div id="wrapper" style="top:96px;">
+        <div class="aui-scrollView">
+            <article class="aui-scrollView-list">
+
+            </article>
+        </div>
+    </div>
+</section>
+<script src="themess/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="themess/js/aui-scroll.js" type="text/javascript"></script>
+<script src="js/mlayer.min.js" type="text/javascript"></script>
+<script src="js/core.util.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var myScroll;
+
+    function loaded() {
+        myScroll = new iScroll('wrapper');
+    }
+
+    $(function () {
+        var url = "";
+        var catId = CoreUtil.getQueryVariable("catId");
+        if (!catId) {
+            catId = null;
+        } else {
+            url = "/api/index/getProductByCateId";
+        }
+        var search = CoreUtil.getQueryVariable("search");
+        if (!search) {
+            search = null;
+        } else {
+            url = "/api/index/search";
+        }
+        var index = mlayer.loading({
+            title: '加载中'
+        });
+        CoreUtil.sendPost(url, {"catId": catId, "search": search}, function (res) {
+            if (res.code == 200) {
+                var content = "";
+                for (var imvos of res.data.productVoList) {
+                    content += "<a href='goods-details.html?productId=" + imvos.id + "'  class='aui-scrollView-list-item'>";
+                    content += "<div class='aui-product-list-img'>";
+                    content += "<img src='" + imvos.imgUrl + "' alt=''>";
+                    content += "</div>";
+                    content += "<div class='aui-product-list-text'>";
+                    content += "<h3 class='aui-product-list-title'>" + imvos.productName + "</h3>";
+                    content += "<div class='aui-product-list-center'>";
+                    content += "<div>";
+                    content += "<span class='aui-product-list-price'><em>¥</em>" + imvos.mallMobilePrice + "</span>";
+                    content += "</div>";
+                    content += "<div class='aui-product-evaluate'>100%好评</div>";
+                    content += "</div>";
+                    content += "</div>";
+                    content += "</a>";
+                }
+                $(".aui-scrollView-list").html(content);
+                document.addEventListener('touchmove', function (e) {
+                    e.preventDefault();
+                }, false);
+                document.addEventListener('DOMContentLoaded', loaded, false);
+            } else {
+                mlayer.error({
+                    title: res.msg,
+                    time: 3
+                });
+            }
+            mlayer.close(index);
+        });
+    });
+</script>
+</body>
+</html>

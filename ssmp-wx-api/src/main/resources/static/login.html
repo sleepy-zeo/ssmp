@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"
+          name="viewport">
+    <title>登录</title>
+    <link href="style/index.css" rel="stylesheet">
+</head>
+<body class="login-bg">
+<div class="login-contain">
+    <div class="login-header">
+        <p>欢迎登录</p>
+    </div>
+    <div align="center" class="login-logo">
+        <img alt="" src="image/7.jpeg">
+        <p>划过美好生活</p>
+    </div>
+    <div class="form-group">
+        <div class="form-item">
+            <label for="phone">
+                <img alt="" src="image/phone.png">
+            </label>
+            <input id="phone" placeholder="请输入手机号" type="text">
+        </div>
+        <div class="form-item">
+            <label for="code">
+                <img alt="" src="image/code.png">
+            </label>
+            <input id="code" placeholder="请输入验证码" type="text">
+            <button id="codeMessage">发送验证码</button>
+        </div>
+    </div>
+    <div class="button-group">
+        <button class="login-btn">登录</button>
+    </div>
+    <div class="casual">
+        <a href="index.html">随便逛逛</a>
+    </div>
+    <div class="order-login">
+        <p>使用第三方账号登录</p>
+        <ul>
+            <li>
+                <a href="#">
+                    <img alt="" src="image/QQ.png">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img alt="" src="image/WeChat.png">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img alt="" src="images/icon_xinlang.png">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="copyright">
+        该技术由如你所喜欢提供
+    </div>
+</div>
+<script src="js/index.js"></script>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/core.util.js" type="text/javascript"></script>
+<script src="js/mlayer.min.js" type="text/javascript"></script>
+
+<script>
+    $(function () {
+        $(".login-btn").click(function () {
+            var phone = $("#phone").val();
+            var code = $("#code").val();
+            if (CoreUtil.isEmpty(phone, '小伙伴，手机号不能为空呦')) {
+                return;
+            }
+            if (CoreUtil.isEmpty(code, '小伙伴，验证码不能为空呦')) {
+                return;
+            }
+            CoreUtil.sendPost("/api/user/login", {"mobile": phone, "message": code}, function (res) {
+                localStorage.setItem("member", JSON.stringify(res.data));
+                location.href = "index.html";
+
+            });
+        });
+
+        var number = 60;
+        $("#codeMessage").click(function () {
+            var phone = $("#phone").val();
+            if (CoreUtil.isEmpty(phone, '小伙伴，手机号不能为空呦')) {
+                return;
+            }
+            CoreUtil.sendPost("/api/user/sendSms", {"mobile": phone, "template": "877505"}, function (res) {
+                var id = setInterval(function () {
+                    $("#codeMessage").html("倒计时" + number--);
+                    if (number == 1) {
+                        number = 60;
+                        $("#codeMessage").removeAttr("disabled");
+                        clearInterval(id);
+                        $("#codeMessage").html("发送验证码");
+                    }
+                }, 1000);
+                $(this).attr("disabled", "disabled");
+            });
+        });
+    })
+</script>
+</body>
+</html>

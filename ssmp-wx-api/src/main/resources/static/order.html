@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no, email=no" name="format-detection"/>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link href="themes/css/core.css" rel="stylesheet">
+    <link href="themes/css/icon.css" rel="stylesheet">
+    <link href="themes/css/home.css" rel="stylesheet">
+    <link href="favicon.ico" rel="icon" type="image/x-icon">
+    <link href="iTunesArtwork@2x.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+</head>
+<body>
+<header class="aui-header-default aui-header-fixed aui-header-bg">
+    <a class="aui-header-item" href="javascript:history.back(-1)">
+        <i class="aui-icon aui-icon-back-white"></i>
+    </a>
+    <div class="aui-header-center aui-header-center-clear">
+        <div class="aui-header-center-logo">
+            <div class="aui-car-white-Typeface">填写订单</div>
+        </div>
+    </div>
+    <a class="aui-header-item-icon" href="#" style="min-width:0">
+        <i class="aui-icon aui-icon-member"></i>
+    </a>
+</header>
+<section class="aui-address-content">
+    <div class="aui-address-box">
+        <div class="aui-address-box-list">
+            <a class="aui-address-box-default">
+                <ul>
+
+                </ul>
+            </a>
+        </div>
+    </div>
+    <div class="aui-dri"></div>
+    <div class="aui-list-product-float-item">
+
+    </div>
+    <div class="aui-address-well">
+        <a class="aui-address-cell aui-fl-arrow" href="#">
+            <div class="aui-address-cell-bd">支持配送</div>
+            <div class="aui-address-cell-ft">
+                <p>在线支付</p>
+                <p>顺丰快递</p>
+                <p class="aui-address-text"><i class="aui-icon aui-prompt-sm"></i>11月12日[周五]09:00-15:00</p>
+            </div>
+        </a>
+
+        <a class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" href="#">
+            <div class="aui-address-cell-bd">发票</div>
+            <div class="aui-address-cell-ft">个人</div>
+        </a>
+
+        <div class="aui-dri"></div>
+        <a class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" href="#">
+            <div class="aui-address-cell-bd">优惠券</div>
+            <div class="aui-address-cell-ft">不可用</div>
+        </a>
+        <div class="aui-dri"></div>
+        <a class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" href="#">
+            <div class="aui-address-cell-bd">
+                <h3>商品金额</h3>
+            </div>
+            <div class="aui-address-cell-ft">
+                <span class="aui-red" id="productMoney"></span><br>
+            </div>
+        </a>
+    </div>
+    <div class="aui-payment-bar">
+        <div class="shop-total">
+            <span class="aui-red aui-size">实付款: <em id="totalMoney"></em></span>
+        </div>
+        <a class="settlement">提交订单</a>
+    </div>
+</section>
+<input id="orderMoney" type="hidden">
+<input id="addressId" type="hidden">
+</body>
+</html>
+<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/core.util.js" type="text/javascript"></script>
+<script src="js/mlayer.min.js" type="text/javascript"></script>
+<script src="js/order.js" type="text/javascript"></script>

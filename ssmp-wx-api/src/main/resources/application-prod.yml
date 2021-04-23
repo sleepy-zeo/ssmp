@@ -1,0 +1,80 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: ssmp-wx-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  datasource:
+    url: jdbc:mysql://127.0.0.1:26503/ssmp-wx??useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: Abc~123123
+    type: com.alibaba.druid.pool.DruidDataSource
+  # thymeleaf
+  thymeleaf:
+    prefix: classpath:/static/
+    check-template-location: true
+    suffix: .html
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    mode: HTML5
+    cache: false
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+    timeout: 1000
+
+wx:
+  mp:
+    useRedis: false
+    redisConfig:
+      host: 127.0.0.1
+      port: 6379
+    configs:
+      - appId: wx3858fb5bf66bfb93 # 第一个公众号的appid
+        secret: a10e7ef6879332a3eaf66a5fcfca83bb # 公众号的appsecret
+        token: 111 # 接口配置里的Token值
+        #aesKey: 111 # 接口配置里的EncodingAESKey值
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+cos:
+  shopImages: https://shop-admin-1300029934.cos.ap-beijing.myqcloud.com
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
